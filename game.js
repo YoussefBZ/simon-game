@@ -3,13 +3,7 @@ var firstTime = true;
 var level = 0;
 var gamePatt = [];
 var buttonColors = ["red", "blue", "yellow", "green"];
-function checkAnswer(currentLevel) {
-    if(userClickedPattern == gamePatt ){
-        console.log("success ! ")
-    }else {
-        console.log("Wrong :(")
-    }
-}
+
 function playSound(sound) {
     soundEff = new Audio("sounds/" + sound + ".mp3");
     soundEff.play()
@@ -28,7 +22,18 @@ function nextSeq() {
     $("#level-title").text("Level " + level);
 
 }
+let i = 0;
+function checkAnswer(currentLevel) {
+    if(JSON.stringify(gamePatt) === JSON.stringify(userClickedPattern) ){
+        setTimeout(() => { userClickedPattern = []; nextSeq() }, 500)
+        
+    } else {
+       var promise =  new Promise(r => setTimeout(r, 1000));
+       playSound("wrong")
 
+    }
+    i++;
+}
 $(document).keypress(function start() {
     if (firstTime == true) {
         firstTime = false;
